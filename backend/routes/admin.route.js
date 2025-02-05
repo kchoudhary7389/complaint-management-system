@@ -8,6 +8,7 @@ const {
   adminChangePassword,
   getAllUsers,
   deleteUser,
+  registerAdmin,
 } = require("../controllers/admin.controller");
 const {
   addCategory,
@@ -45,6 +46,16 @@ const { getUserProfileByid } = require("../controllers/user.controller");
 
 const router = Router();
 
+router.post(
+  "/register",
+  [
+    body("email").isEmail().withMessage("Invalid Email Address"),
+    body("password")
+      .isLength({ min: 6 })
+      .withMessage("Password must be at least 6 characters long"),
+  ],
+  registerAdmin
+);
 router.post(
   "/login",
   [

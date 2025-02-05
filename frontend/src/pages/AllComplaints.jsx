@@ -103,7 +103,7 @@ function AllComplaints() {
               </table>
             ) : (
               <h3 className="text-gray-400 text-2xl text-center">
-                There is no Users
+                There is no Complaints
               </h3>
             )}
 

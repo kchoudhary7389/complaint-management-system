@@ -132,7 +132,7 @@ function AddState() {
             }}
             className="mt-10 overflow-auto h-72 scrollbar-none shadow-inner p-2"
           >
-            {states ? (
+            {states.length > 0 ? (
               <table className="w-full  border-collapse border border-gray-300 shadow-lg rounded-lg">
                 <thead className="bg-gray-100 text-gray-800">
                   <tr>
@@ -185,7 +185,7 @@ function AddState() {
               </table>
             ) : (
               <h3 className="text-gray-400 text-2xl text-center">
-                There is no SubCategories
+                There is no States
               </h3>
             )}
             {showModal && (

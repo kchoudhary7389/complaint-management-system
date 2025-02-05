@@ -2,6 +2,34 @@ const adminModel = require("../models/admin.model");
 const { validationResult } = require("express-validator");
 const userModel = require("../models/user.model");
 
+
+const registerAdmin = async (req, res, next) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(400).json({ errors: error.array() });
+  }
+
+  const { fullname, email, password, contactno } = req.body;
+  // console.log(fullname, email, password, contactno);
+
+  const isUserExist = await adminModel.findOne({ email: email });
+  if (isUserExist) {
+    return res.status(400).json({ message: "User already exists" });
+  }
+
+  const hashedPassword = await adminModel.hashPassword(password);
+
+  const user = await adminModel.create({
+    fullname,
+    email,
+    password: hashedPassword,
+    contactno,
+  });
+
+  const token = await user.generateToken();
+
+  return res.status(200).json({ token, user });
+};
 const loginAdmin = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -135,6 +163,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+  registerAdmin,
   loginAdmin,
   getAdminProfile,
   logoutAdmin,
