@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "npm rebuild bcrypt --build-from-source && npm install",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
