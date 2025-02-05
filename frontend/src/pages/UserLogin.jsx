@@ -28,7 +28,6 @@ function UserLogin() {
         `${import.meta.env.VITE_BASE_URL}/users/login`,
         user
       );
-
       if (res.status === 200) {
         const data = res.data;
         setUser(data.user);
