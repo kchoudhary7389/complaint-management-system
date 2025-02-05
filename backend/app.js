@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 connectTodb();
+app.options("*", cors()); // Allows all preflight requests
 
 app.get("/", (req, res) => {
   res.send("hello world!");
