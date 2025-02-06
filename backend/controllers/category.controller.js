@@ -96,7 +96,7 @@ const getCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
     const category = await categoryModel.findById(id);
-    console.log(category)
+    console.log(category);
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
