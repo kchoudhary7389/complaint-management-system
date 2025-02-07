@@ -10,8 +10,8 @@ const createComplaint = async (req, res) => {
 
   const {
     userId,
-    category,
     subCategory,
+    category,
     complaintType,
     state,
     natureOfComplaint,
@@ -51,8 +51,8 @@ const getComplaintHistory = async (req, res) => {
     const complaints = await complaintModel
       .find({ userId })
       .sort({ createdAt: -1 })
-      .populate("userId", "fullname email");
-
+      .populate("userId", "fullname email")
+      .populate("category", "category");
     return res.status(200).json({ complaints });
   } catch (error) {
     console.log(error);
@@ -86,7 +86,8 @@ const getComplaintDetails = async (req, res) => {
 
     const complaintDetails = await complaintModel
       .findById(id)
-      .populate("userId", "fullname email");
+      .populate("userId", "fullname email")
+      .populate("category");
     const remark = await complaintRemarkModel.find({ complaintId: id });
 
     if (!complaintDetails) {

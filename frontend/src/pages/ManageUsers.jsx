@@ -56,7 +56,7 @@ function ManageUsers() {
           </h3>
           <div className="w-full sm:mt-20 mt-5">
             {users.length > 0 ? (
-              <table className="w-full hidden sm:block border-collapse border border-gray-300 shadow-lg rounded-lg">
+              <table className="w-full hidden sm:table border-collapse border border-gray-300 shadow-lg rounded-lg">
                 <thead className="bg-gray-100 text-gray-800">
                   <tr>
                     <th className="text-left px-6 py-3 border-b border-gray-300 font-semibold">

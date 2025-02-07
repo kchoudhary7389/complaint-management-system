@@ -10,17 +10,13 @@ const adminRoutes = require("./routes/admin.route");
 
 app.use(
   cors({
-    origin: "*", // Add your frontend URL
+    origin: "http://localhost:5173", // Add your frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // Allow cookies & authentication headers
   })
 );
 
-app.use((req, res, next) => {
-  console.log("Incoming Request Origin:", req.headers.origin);
-  next();
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -12,7 +12,6 @@ function LodgeComplaint() {
   const [complaint, setComplaint] = useState("");
   const [complaintNature, setComplaintNature] = useState("");
   const [complaintDets, setComplaintDets] = useState("");
-
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [states, setStates] = useState([]);
@@ -21,6 +20,7 @@ function LodgeComplaint() {
   const navigate = useNavigate();
 
   const { user, setUser } = useContext(userDataContext);
+
   useEffect(() => {
     const fetchCategories = async () => {
       const token = localStorage.getItem("token");
@@ -34,26 +34,10 @@ function LodgeComplaint() {
         }
       } catch (error) {
         console.log(error);
-        setError(error.response.data.message || error.response.data.error);
+        setError(error.response?.data?.message || error.response?.data?.error);
       }
     };
     fetchCategories();
-
-    const fetchSubCategory = async () => {
-      const token = localStorage.getItem("token");
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/admin/get-all-subCategory`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (res.status === 200) {
-          setSubCategories(res.data.subCategories);
-        }
-      } catch (error) {
-        setError(error.response.data.message || error.response.data.error);
-      }
-    };
-    fetchSubCategory();
 
     const fetchState = async () => {
       const token = localStorage.getItem("token");
@@ -66,11 +50,40 @@ function LodgeComplaint() {
           setStates(res.data.states);
         }
       } catch (error) {
-        setError(error.response.data.message || error.response.data.error);
+        setError(error.response?.data?.message || error.response?.data?.error);
       }
     };
     fetchState();
   }, []);
+
+  // Fetch subcategories when category is selected
+  const fetchSubCategory = async (categoryId) => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/users/get-subCategory/${categoryId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.status === 200) {
+        setSubCategories(res.data.subCategories);
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error.response?.data?.message || error.response?.data?.error);
+    }
+  };
+
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    const selectedCategoryId = e.target.selectedOptions[0].dataset.id;
+    setCategory(selectedCategory);
+
+    if (selectedCategoryId) {
+      fetchSubCategory(selectedCategoryId);
+    } else {
+      setSubCategories([]); // Reset subcategories if no category is selected
+    }
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -106,9 +119,10 @@ function LodgeComplaint() {
         }, 1000);
       }
     } catch (error) {
-      setError(error.response.data.message || error.response.data.errors);
+      setError(error.response?.data?.message || error.response?.data?.errors);
     }
   };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -130,8 +144,9 @@ function LodgeComplaint() {
                 {message}
               </p>
             )}
-            {error && Array.isArray(error)
-              ? error.map((err, index) => (
+            {error &&
+              (Array.isArray(error) ? (
+                error.map((err, index) => (
                   <p
                     key={index}
                     className="text-sm text-white p-2 text-center bg-red-500 w-full"
@@ -139,31 +154,30 @@ function LodgeComplaint() {
                     {err.msg}
                   </p>
                 ))
-              : error && (
-                  <p className="text-sm text-white p-2 text-center bg-red-500 w-full">
-                    {error}
-                  </p>
-                )}
+              ) : (
+                <p className="text-sm text-white p-2 text-center bg-red-500 w-full">
+                  {error}
+                </p>
+              ))}
             <h3>Register Complaint</h3>
-            <form onSubmit={submitHandler} action="">
+            <form onSubmit={submitHandler}>
               <div className="flex flex-col sm:flex-row w-full sm:gap-10 gap-2">
                 <div className="w-full">
                   <div className="mt-4">
                     <h4 className="text-gray-600 mb-2">Select Category</h4>
                     <select
                       value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                      type="text"
+                      onChange={handleCategoryChange}
                       className="border-2 outline-none border-gray-500 w-full p-2"
                     >
-                      <option className="w-20" value="" disabled>
+                      <option value="" disabled>
                         Select Category
                       </option>
                       {categories.map((category, index) => (
                         <option
-                          className="w-20"
                           key={index}
                           value={category.category}
+                          data-id={category._id}
                         >
                           {category.category}
                         </option>
@@ -244,11 +258,11 @@ function LodgeComplaint() {
                       className="border-2 outline-none border-gray-500 w-full h-32 p-2"
                     ></textarea>
                   </div>
-                  <button className="text-lg mt-9 w-full bg-blue-600 px-4 py-1 rounded text-white">
-                    Submit
-                  </button>
                 </div>
               </div>
+              <button className="text-lg mt-9 w-full bg-blue-600 px-4 py-1 rounded text-white">
+                Submit
+              </button>
             </form>
           </div>
         </div>

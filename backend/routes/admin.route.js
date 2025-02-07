@@ -24,6 +24,7 @@ const {
   deleteSubCategory,
   getAllSubCategory,
   getSubCategoryById,
+  getSubcategoryByCategory,
 } = require("../controllers/subCategory.controller");
 const { authAdmin } = require("../middlewares/auth.middleware");
 const {

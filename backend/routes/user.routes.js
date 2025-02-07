@@ -16,6 +16,9 @@ const {
   deleteComplaint,
   getComplaintDetails,
 } = require("../controllers/complaint.controller");
+const {
+  getSubcategoryByCategory,
+} = require("../controllers/subCategory.controller");
 
 const router = Router();
 
@@ -106,5 +109,6 @@ router.post(
 router.get("/complaint-history", authUser, getComplaintHistory);
 router.get("/complaint-details/:id", authUser, getComplaintDetails);
 router.delete("/delete-complaint/:id", authUser, deleteComplaint);
+router.get("/get-subCategory/:categoryId", authUser, getSubcategoryByCategory);
 
 module.exports = router;

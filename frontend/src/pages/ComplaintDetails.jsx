@@ -24,6 +24,7 @@ function ComplaintDetails() {
         if (res.status === 200) {
           setComplaintDetails([res.data.complaintDetails]);
           setRemarkList(res.data.remark);
+          console.log(res.data)
         }
       } catch (error) {
         console.log(error);

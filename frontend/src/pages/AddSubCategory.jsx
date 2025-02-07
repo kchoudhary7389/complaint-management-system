@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 
 function AddSubCategory() {
   const [subCategory, setSubCategory] = useState("");
+  const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   let [count, setCount] = useState(1);
   const [error, setError] = useState(null);
@@ -23,7 +25,7 @@ function AddSubCategory() {
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/admin/add-subCategory`,
-        { subCategory },
+        { subCategory, categoryId: category },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.status === 200) {
@@ -36,6 +38,23 @@ function AddSubCategory() {
     }
   };
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/admin/get-all-category`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        if (res.status === 200) {
+          setCategories(res.data.categories);
+        }
+      } catch (error) {
+        setError(error.response.data.message || error.response.data.error);
+      }
+    };
+    fetchCategories();
+  }, []);
   useEffect(() => {
     const fetchCategories = async () => {
       const token = localStorage.getItem("token");
@@ -82,7 +101,9 @@ function AddSubCategory() {
           <Sidebar />
         </div>
         <div className="p-5 w-full">
-          <h3 className="sm:text-4xl text-2xl sm:text-left text-center   uppercase">Add your SubCategory</h3>
+          <h3 className="sm:text-4xl text-2xl sm:text-left text-center   uppercase">
+            Add your SubCategory
+          </h3>
           <div className="w-full mt-10">
             {message && (
               <p className="text-sm text-white p-2 text-center bg-green-500 w-full">
@@ -105,6 +126,19 @@ function AddSubCategory() {
                 )}
             <h3>Add SubCategory</h3>
             <form onSubmit={submitHandler} action="">
+              <div className="mt-4">
+                <h4 className="text-gray-600 mb-2">SubCategory</h4>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="border-2 outline-none border-gray-500 sm:w-1/2 w-full p-2"
+                >
+                  <option value="">Select your category</option>
+                  {categories.map((category) => (
+                    <option value={category._id}>{category.category}</option>
+                  ))}
+                </select>
+              </div>
               <div className="mt-4">
                 <h4 className="text-gray-600 mb-2">SubCategory</h4>
                 <input
