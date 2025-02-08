@@ -66,7 +66,7 @@ function ComplaintDetails() {
                 </p>
               )}
 
-          <table className="w-full  mt-10 border border-gray-300 shadow-lg rounded-lg overflow-hidden hidden sm:block">
+          <table className="w-full  mt-10 border border-gray-300 shadow-lg rounded-lg overflow-hidden hidden sm:table">
             {complaintDetails.map((detail, index) => (
               <tbody key={index} className="bg-white divide-y divide-gray-300">
                 {/* Row 1 */}
