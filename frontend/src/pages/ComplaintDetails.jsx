@@ -24,7 +24,7 @@ function ComplaintDetails() {
         if (res.status === 200) {
           setComplaintDetails([res.data.complaintDetails]);
           setRemarkList(res.data.remark);
-          console.log(res.data)
+          console.log(res.data);
         }
       } catch (error) {
         console.log(error);
@@ -45,7 +45,9 @@ function ComplaintDetails() {
           <Sidebar />
         </div>
         <div className="p-5 w-full">
-          <h3 className="sm:text-4xl text-2xl text-center sm:text-left uppercase">complaint details</h3>
+          <h3 className="sm:text-4xl text-2xl text-center sm:text-left uppercase">
+            complaint details
+          </h3>
           {message && (
             <p className="text-sm text-white p-2 text-center bg-green-500 w-full">
               {message}
@@ -66,7 +68,7 @@ function ComplaintDetails() {
                 </p>
               )}
 
-          <table className="w-full  mt-10 border border-gray-300 shadow-lg rounded-lg overflow-hidden hidden sm:block">
+          <table className="w-full  mt-10 border border-gray-300 shadow-lg rounded-lg overflow-hidden hidden sm:table">
             {complaintDetails.map((detail, index) => (
               <tbody key={index} className="bg-white divide-y divide-gray-300">
                 {/* Row 1 */}

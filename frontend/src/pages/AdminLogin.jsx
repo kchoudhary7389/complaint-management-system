@@ -6,6 +6,7 @@ import { adminDataContext } from "../context/AdminContext";
 function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const { admin, setAdmin } = useContext(adminDataContext);
@@ -13,6 +14,7 @@ function AdminLogin() {
   const submitHandler = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     if (!email || !password) {
       setError("All fields are required.");
@@ -42,6 +44,7 @@ function AdminLogin() {
         setError("Something went wrong");
       }
     }
+    setLoading(false);
 
     setEmail("");
     setPassword("");
@@ -70,7 +73,9 @@ function AdminLogin() {
           <div className="">
             <form onSubmit={submitHandler} action="">
               <div className="mt-3">
-                <h4 className="text-gray-600 text-sm sm:text-base tracking-widest py-2">EMAIL</h4>
+                <h4 className="text-gray-600 text-sm sm:text-base tracking-widest py-2">
+                  EMAIL
+                </h4>
                 <input
                   type="email"
                   value={email}
@@ -80,7 +85,9 @@ function AdminLogin() {
                 />
               </div>
               <div className="mt-2 relative">
-                <h4 className="text-gray-600 text-sm sm:text-base tracking-widest py-2">PASSWORD</h4>
+                <h4 className="text-gray-600 text-sm sm:text-base tracking-widest py-2">
+                  PASSWORD
+                </h4>
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
@@ -101,10 +108,34 @@ function AdminLogin() {
                 )}
               </div>
               <div className="flex items-center justify-end mt-2">
-                <Link to="/admin-forgot-password" className="text-blue-600">Forgot Password?</Link>
+                <Link to="/admin-forgot-password" className="text-blue-600">
+                  Forgot Password?
+                </Link>
               </div>
-              <button className="text-xl w-full py-1 mt-5 font-mono text-white rounded-lg bg-blue-500">
-                Login
+              <button className="text-xl w-full py-1 flex justify-center items-center mt-5 font-mono text-white rounded-lg bg-blue-500">
+                {loading ? (
+                  <svg
+                    className="animate-spin h-7 w-7 mr-2"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="white"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="white"
+                      d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
+                    />
+                  </svg>
+                ) : (
+                  "Login"
+                )}{" "}
               </button>
               <h1 className="mt-2 text-center">
                 <Link to="/" className="text-blue-500">
