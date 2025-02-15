@@ -44,10 +44,10 @@ function AdminForgotPassword() {
   };
   return (
     <div className="w-full h-screen overflow-hidden bg-sky-300 flex items-center justify-center ">
-      <div className=" relative rounded-lg bg-white w-[30%] flex items-center">
-        <div className="w-[100%] bg-white p-10 rounded-lg">
+      <div className=" relative rounded-lg bg-white sm:w-[30%] h-screen sm:h-fit w-full flex items-center">
+        <div className="w-[100%] bg-white sm:p-10 p-2 rounded-lg">
           <div className="flex items-center text-sky-500 justify-between">
-            <h1 className=" text-2xl text-center w-full">
+            <h1 className=" sm:text-2xl text-xl">
               ADMIN RECOVER PASSWORD
             </h1>
           </div>
@@ -107,12 +107,12 @@ function AdminForgotPassword() {
                 {showPassword ? (
                   <i
                     onClick={() => setShowPassword((prev) => !prev)}
-                    class="ri-eye-line text-gray-600 absolute text-xl right-2 top-12 cursor-pointer"
+                    className="ri-eye-line text-gray-600 absolute text-xl right-2 top-12 cursor-pointer"
                   ></i>
                 ) : (
                   <i
                     onClick={() => setShowPassword((prev) => !prev)}
-                    class="ri-eye-off-line text-gray-600 absolute text-xl right-2 top-12 cursor-pointer"
+                    className="ri-eye-off-line text-gray-600 absolute text-xl right-2 top-12 cursor-pointer"
                   ></i>
                 )}
               </div>
@@ -131,12 +131,12 @@ function AdminForgotPassword() {
                 {showPassword ? (
                   <i
                     onClick={() => setShowPassword((prev) => !prev)}
-                    class="ri-eye-line text-gray-600 absolute text-xl right-2 top-12 cursor-pointer"
+                    className="ri-eye-line text-gray-600 absolute text-xl right-2 top-12 cursor-pointer"
                   ></i>
                 ) : (
                   <i
                     onClick={() => setShowPassword((prev) => !prev)}
-                    class="ri-eye-off-line text-gray-600 absolute text-xl right-2 top-12 cursor-pointer"
+                    className="ri-eye-off-line text-gray-600 absolute text-xl right-2 top-12 cursor-pointer"
                   ></i>
                 )}
               </div>
